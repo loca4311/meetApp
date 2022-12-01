@@ -3,24 +3,24 @@ import { writable } from "svelte/store";
 const meetups = writable([
   {
     id: "m1",
-    title: "Coding Bootcamp",
+    title: "Coding",
     subtitle: "Learn to code in 2 hours",
     description:
       "In this meetup, we will have some experts that tech you how to code",
     imageUrl:
       "https://media.istockphoto.com/id/1354441996/photo/image-of-open-antique-book-on-wooden-table-with-glitter-overlay.jpg?b=1&s=170667a&w=0&k=20&c=O_VZbgONe4WTXPOEvwKYezhqFkzAXpr2g-lCdpdj5FU=",
-    address: "27th Nerd Road, 32523 New York",
+    address: "27th Chornovola, 32523 Lviv",
     contactEmail: "code@test.com",
     isFavorite: false,
   },
   {
     id: "m2",
-    title: "Swim Together",
-    subtitle: "Let's go for some swiming",
-    description: "We wil simply swim some rounds!",
+    title: "Code Together",
+    subtitle: "Let's go for some coding",
+    description: "We will simply code some!",
     imageUrl:
       "https://media.istockphoto.com/id/1354441996/photo/image-of-open-antique-book-on-wooden-table-with-glitter-overlay.jpg?b=1&s=170667a&w=0&k=20&c=O_VZbgONe4WTXPOEvwKYezhqFkzAXpr2g-lCdpdj5FU=",
-    address: "27th Nerd Road, 32523 New York",
+    address: "27th Chornovola, 32523 Lviv",
     contactEmail: "swim@test.com",
     isFavorite: false,
   },
