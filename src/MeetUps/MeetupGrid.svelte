@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { scale } from "svelte/transition";
+  import { scale, fade } from "svelte/transition";
   import { flip } from "svelte/animate";
 
   import MeetupItem from "./MeetupItem.svelte";
@@ -25,7 +25,7 @@
 </section>
 <section id="meetups">
   {#each filteredMeetups as meetup (meetup.id)}
-    <div transition:scale animate:flip={{ duration: 300 }}>
+    <div transition:fade animate:flip={{ duration: 300 }}>
       <MeetupItem
         id={meetup.id}
         title={meetup.title}

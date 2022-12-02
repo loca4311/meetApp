@@ -2520,7 +2520,7 @@ var app = (function () {
     			div = element("div");
     			create_component(meetupitem.$$.fragment);
     			t = space();
-    			add_location(div, file$5, 27, 4, 765);
+    			add_location(div, file$5, 27, 4, 771);
     			this.first = div;
     		},
     		m: function mount(target, anchor) {
@@ -2559,7 +2559,7 @@ var app = (function () {
     			transition_in(meetupitem.$$.fragment, local);
 
     			add_render_callback(() => {
-    				if (!div_transition) div_transition = create_bidirectional_transition(div, scale, {}, true);
+    				if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, true);
     				div_transition.run(1);
     			});
 
@@ -2567,7 +2567,7 @@ var app = (function () {
     		},
     		o: function outro(local) {
     			transition_out(meetupitem.$$.fragment, local);
-    			if (!div_transition) div_transition = create_bidirectional_transition(div, scale, {}, false);
+    			if (!div_transition) div_transition = create_bidirectional_transition(div, fade, {}, false);
     			div_transition.run(0);
     			current = false;
     		},
@@ -2637,10 +2637,10 @@ var app = (function () {
 
     			attr_dev(section0, "id", "meetup-contols");
     			attr_dev(section0, "class", "svelte-us6t6z");
-    			add_location(section0, file$5, 21, 0, 545);
+    			add_location(section0, file$5, 21, 0, 551);
     			attr_dev(section1, "id", "meetups");
     			attr_dev(section1, "class", "svelte-us6t6z");
-    			add_location(section1, file$5, 25, 0, 690);
+    			add_location(section1, file$5, 25, 0, 696);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2765,6 +2765,7 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		createEventDispatcher,
     		scale,
+    		fade,
     		flip,
     		MeetupItem,
     		MeetupFilter,
