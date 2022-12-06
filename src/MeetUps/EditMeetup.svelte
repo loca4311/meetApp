@@ -6,6 +6,7 @@
   import TextInput from "../UI/TextInput.svelte";
   import Button from "../UI/Button.svelte";
   import Modal from "../UI/Modal.svelte";
+  import Error from "../UI/Error.svelte";
 
   import {
     isEmpty,
@@ -21,6 +22,8 @@
   let email = "";
   let description = "";
   let imageUrl = "";
+
+  let error;
 
   if (id) {
     const unsubscribe = meetups.subscribe((items) => {
@@ -64,21 +67,83 @@
     };
 
     if (id) {
-      meetups.updateMeetup(id, meetupData);
+      fetch(
+        `https://meetup-svelte-4c3e7-default-rtdb.europe-west1.firebasedatabase.app/meetups/${id}.json`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(meetupData),
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed!");
+          }
+          meetups.updateMeetup(id, meetupData);
+        })
+        .catch((err) => {
+          error = err;
+          console.log(err);
+        });
     } else {
-      meetups.addMeetup(meetupData);
+      fetch(
+        "https://meetup-svelte-4c3e7-default-rtdb.europe-west1.firebasedatabase.app/meetups.json",
+        {
+          method: "POST",
+          isFavorite: false,
+          body: JSON.stringify({ ...meetupData, isFavorite: false }),
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed!");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          meetups.addMeetup({
+            ...meetupData,
+            isFavorite: false,
+            id: data.name,
+          });
+        })
+        .catch((err) => {
+          error = err;
+          console.log(err);
+        });
     }
 
     dispatch("save");
   }
 
   function deleteMeetup() {
-    meetups.removeMeetup(id);
+    fetch(
+      `https://meetup-svelte-4c3e7-default-rtdb.europe-west1.firebasedatabase.app/meetups/${id}.json`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to delete");
+        }
+        meetups.removeMeetup(id);
+      })
+      .catch((err) => {
+        error = err;
+        console.log(err);
+      });
+
     dispatch("save");
   }
 
   function cancel() {
     dispatch("cancel");
+  }
+
+  function clearError() {
+    error = null;
   }
 </script>
 
@@ -151,6 +216,10 @@
     {/if}
   </div>
 </Modal>
+
+{#if error}
+  <Error message={error.message} on:cancel={clearError} />
+{/if}
 
 <style>
   form {
